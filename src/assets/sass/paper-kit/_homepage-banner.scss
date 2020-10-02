@@ -5,7 +5,11 @@
     @media (min-width: 1400px) {
             height: 37vw;
             right: -7vw;
-        }
+    }
+    @media (max-width: 500px) {
+        right: -10vw;
+        width: 180%;    
+    }
 } 
 
 

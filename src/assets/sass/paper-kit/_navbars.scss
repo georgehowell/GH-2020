@@ -500,3 +500,10 @@
 .navbar-hidden{
     display: none;
 }
+
+
+.navbar-nav .nav-item button.close {
+    @media (min-width: 780px) {
+        display: none;
+    }
+}
