@@ -1,5 +1,16 @@
 import {Component, Input} from '@angular/core';
-import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+
+export enum ModalContentEnum {
+    Nestea,
+    Toyota,
+    Optus,
+    Works,
+    Sonos,
+    SaPol,
+    Disaronno,
+    Virgin
+}
 
 @Component({
     selector: 'app-modal-content',
@@ -8,8 +19,14 @@ import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
     // `
 })
 export class NgbdModalContent {
-    @Input() name;
-
+    @Input()
+    public name: string;
+    
+    @Input()
+    public modalContent: ModalContentEnum;
+    
+    public modalContentEnum = ModalContentEnum;
+    
     constructor(public activeModal: NgbActiveModal) {}
 }
 
@@ -18,9 +35,13 @@ export class NgbdModalContent {
     templateUrl: './modal.component.html'
 })
 export class NgbdModalComponent {
-    constructor(private modalService: NgbModal) {}
-    open() {
+    public modalContent = ModalContentEnum;
+
+    constructor(private modalService: NgbModal) { }
+    
+    open(modalContent: ModalContentEnum) {
         const modalRef = this.modalService.open(NgbdModalContent);
         modalRef.componentInstance.name = 'World';
+        modalRef.componentInstance.modalContent = modalContent;
     }
 }
