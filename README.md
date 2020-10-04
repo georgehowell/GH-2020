@@ -15,7 +15,7 @@ Run in terminal: npm install -g @angular/cli
 ### npm start
 ### http://localhost:4200/
 
-
+### ng build --prod --base-href "http://georgehowell.com.au/GH-2020/"
 ## File Structure
 
 Within the download you'll find the following directories and files:
