@@ -1,0 +1,249 @@
+// Love dynamically typed text? You're gonna love this
+// Edit these strings to see them typed on the screen:
+$strings: (
+    "George Howell Online Portfolio"
+    "coming soon"
+    "VueJS 3.0"
+    "Angular 10"
+    "stay tuned..."
+);
+
+// now for some timing (in seconds)
+$durCharFwd: 0.10; // character typed
+$durFullGap: 2.00; // time between typed/delete
+$durCharBwd: 0.08; // character deleted
+$durDoneGap: 1.00; // time between strings
+
+// initializing some variables and functions ✊🏼
+$charCount: 0; $durTotal: 0;
+@each $string in $strings {
+	$charCount: $charCount + str-length($string);
+	$durTotal: $durTotal
+		+ (str-length($string) * ($durCharFwd + $durCharBwd))
+		+ $durFullGap + $durDoneGap;
+}
+@function percent($string, $letter, $modifier) {
+	$stringsPast: $string - 1; $time: 0;
+	@while $stringsPast > 0 {
+		$time: $time
+			+ (($durCharFwd + $durCharBwd) * (str-length(nth($strings, $stringsPast))))
+			+ $durFullGap + $durDoneGap;
+		$stringsPast: $stringsPast - 1;
+	}
+	@if $letter <= str-length(nth($strings, $string)) {
+		$time: $time
+			+ ($durCharFwd * ($letter - 1));
+	} @else {
+		$time: $time
+			+ ($durCharFwd * str-length(nth($strings, $string)))
+			+ $durFullGap
+			+ ($durCharBwd * ($letter - str-length(nth($strings, $string))));
+	}
+	@return ($time / $durTotal * 100 + $modifier) + "%";
+}
+$currentPercentage: 0;
+// now THIS is where the magic happens... ✨
+@keyframes typed {
+	@for $i from 1 through length($strings) {
+		// @for $j from 1 through (str-length(nth($strings, $i)) * 2 - 1) {
+		@for $j from 1 through (str-length(nth($strings, $i)) * 2) {
+			/* string #{$i}, char #{$j} */
+			@if $j < str-length(nth($strings, $i)) * 2 { // not last character deleted
+				#{percent($i, $j, 0)}, #{percent($i, $j+1, -0.001)} {
+					@if $j <= str-length(nth($strings, $i)) {
+						content: quote(#{str_slice(nth($strings, $i), 1, $j)});
+					} @else {
+						content: quote(#{str_slice(nth($strings, $i), 1, str-length(nth($strings, $i)) - ($j - str-length(nth($strings, $i))))});
+					}
+				}
+			} @else {
+				@if $i < length($strings) { // not last string
+					#{percent($i, $j, 0)}, #{percent($i+1, 1, -0.001)} {
+						content: "​"; // zero-width space to retain element height
+					}
+				} @else { // last string
+					#{percent($i, $j, 0)}, 100% {
+						content: "​"; // zero-width space to retain element height
+					}
+				}
+			}
+		}
+	}
+}
+@keyframes beam-blink {
+	75% { border-color: transparent; }
+}
+* { backface-visibility: hidden; }
+.animated-text {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	// background-color: #000;
+	// background-image: // skeuomorphism anyone?
+	// 	radial-gradient(rgba(#fff, 0.125), rgba(#fff, 0)),
+	// 	linear-gradient(to bottom, #000, #000 2px, #111 3px);
+	background-repeat: repeat-y;
+	background-position: center center;
+	background-size: cover, 100% 3px;
+	font-size: calc(10px + 2vw);
+	font-family: 'VT323', monospace, sans-serif;
+	color: #3f3; // hacker green
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	&::after {
+		content: "​"; // zero-width space to retain element height
+		position: relative;
+		top: -13px;
+		@media (max-width: 575px) { top: -33px; }
+		display: inline-block;
+		padding-right: 3px;
+		padding-right: calc(3px + 0.1vw);
+		border-right: 10px solid rgba(#3f3, 0.75);
+		border-right: calc(1.1vw + 4px) solid rgba(#3f3, 0.75);
+		text-shadow: 0 0 5px rgba(51, 255, 51, 0.75);
+		white-space: nowrap;
+		animation: typed #{$durTotal + "s"} linear 1s infinite, beam-blink 1s infinite;
+	}
+	&::before { // just generating some useful stats here 👋🏼
+		content: "#{length($strings)} strings / #{$charCount} chars / #{$durTotal}s duration";
+		@media (max-width: 575px) {
+			content: "#{length($strings)} strings \A #{$charCount} chars \A #{$durTotal}s duration";
+		}
+		display: block;
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+		padding: 3px 0;
+		background: #00f; // aquaman blue
+		color: #fff; // Brandon-McConnell white
+		text-align: center;
+		font-size: 18px;
+		letter-spacing: 0.7px;
+        white-space: pre-wrap;
+        display:none;
+    }
+    @media screen and (max-width:500px) {
+        font-size: 42px;
+    }
+}
+// body[onload] {
+// 	&::before, &::after { display: none !important; }
+// 	background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1580009/codepen_css-typed-this.png) center / cover;
+// }
+
+.angularLogo{
+	width: 12%;
+    height: auto;
+	margin: 70px auto 0 43%;
+}
+.wufoo-letter path {
+	animation: hideshow 4s ease alternate infinite;
+	
+	&:nth-child(2) {
+	  animation-delay: 0.1s;
+	}
+	&:nth-child(3) {
+	  animation-delay: 0.2s;
+	}
+	&:nth-child(4) {
+	  animation-delay: 0.3s;
+	}
+	&:nth-child(5) {
+		animation-delay: 0.4s;
+	  }
+	  &:nth-child(6) {
+		animation-delay: 0.5s;
+	  }
+	  &:nth-child(7) {
+		animation-delay: 0.6s;
+	  }
+	  &:nth-child(8) {
+	  animation-delay: 0.7s;
+	}
+  }
+//   @keyframes kaboom {
+// 	90% {
+// 	  transform: scale(1.0);
+// 	}
+// 	100% {
+// 	  transform: scale(1.5);
+// 	}
+//   }
+  
+
+  
+  @keyframes hideshow {
+	0% { opacity: 1; }
+	90% { opacity: 1; }
+	95% { opacity: 0; }
+	100% { opacity: 0; }
+  }
+  
+  
+  
+ .star {
+	position: absolute;
+    width: fit-content;
+	height: fit-content;
+	left: 44%;
+	top:90px;
+	&:nth-child(1){
+		top:120px;
+		left: 52%;
+	}
+	&:nth-child(2){
+		top:155px;
+		left: 45%;
+		opacity: 1;
+	}
+  }
+  img.character {
+	position: absolute;
+	top: calc(50% - 50px);
+	left: calc(50% - 50px);
+	witdh: 100px;
+	height: 100px;
+	border-radius: 5px;
+  }
+  
+  .glitter-star1,
+  .glitter-star2,
+  .glitter-star3 {
+	position: absolute;
+	animation: glitter 4s linear 0s infinite normal;
+	-webkit-animation: glitter 4s linear 0s infinite normal;
+	-moz-animation: glitter 4s linear 0s infinite normal;
+	-ms-animation: glitter 4s linear 0s infinite normal;
+	-o-animation: glitter 4s linear 0s infinite normal;
+  }
+  
+  .glitter-star2 {
+	  animation-delay: 500ms;
+  }
+  
+.glitter-star3 {
+	animation-delay: 1200ms;
+  }
+  
+  @keyframes glitter {
+	0% {
+	  -webkit-transform: scale(1.0);
+	  opacity: 1;
+	}
+	25% {
+	  -webkit-transform: scale(0.5);
+	  opacity: 0;
+	}
+	50% {
+	  -webkit-transform: scale(1.0);
+	  opacity: 1;
+	}
+	75% {
+	  -webkit-transform: scale(0.5);
+	  opacity: 0;
+	}
+	100% {
+	  -webkit-transform: scale(1.0);
+	  opacity: 1;
+	}
+  }

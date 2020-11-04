@@ -1,0 +1,38 @@
+<div class="modal-header">
+    <h5 class="modal-title text-center">Javascript Animated Banners</h5>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('click')">
+    <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div *ngIf="modalContent === modalContentEnum.Nestea" class="modal-body">
+    <iframe src="http://georgehowell.com.au/GH-2020/banner-ads/nestea/index.html" scrolling="no" height="360" width="640"></iframe>
+    <p><small>Created using GSAP for Blaze Advertising (2014)</small></p>
+</div>
+<div *ngIf="modalContent === modalContentEnum.Toyota" class="modal-body">
+    <iframe src="http://georgehowell.com.au/GH-2020/banner-ads/toyota/index.html" scrolling="no" height="600" width="300"></iframe>
+    <p><small>Created using GSAP for Blaze Advertising (2014)</small></p>
+</div>
+<div *ngIf="modalContent === modalContentEnum.Optus" class="modal-body">
+    <iframe src="http://georgehowell.com.au/GH-2020/banner-ads/optus/index.html" scrolling="no" height="208" width="668"></iframe>
+    <p><small>Created using GSAP for TLC Marketing, Sydney (2011)</small></p>
+</div>
+<div *ngIf="modalContent === modalContentEnum.Works" class="modal-body">
+    <iframe src="http://georgehowell.com.au/GH-2020/banner-ads/works/index.html" scrolling="no" height="267" width="317"></iframe>
+    <p><small>Created using CreateJS for The Works Agency, North Sydney (2013)</small></p>
+</div>
+<div *ngIf="modalContent === modalContentEnum.Sonos" class="modal-body">
+    <iframe src="http://georgehowell.com.au/GH-2020/banner-ads/sonos/index.html" scrolling="no" height="436" width="349"></iframe>
+    <p><small>Created using Vanilla Javascript for me (2013)</small></p>
+</div>
+<div *ngIf="modalContent === modalContentEnum.Disaronno" class="modal-body">
+    <iframe src="http://georgehowell.com.au/GH-2020/banner-ads/disaronno/index.html" scrolling="no" width="158" height="638"></iframe>
+    <p><small>Created using CreateJS for TLC Marketing (2011)</small></p>
+</div>
+<div *ngIf="modalContent === modalContentEnum.SaPol" class="modal-body">
+    <iframe src="http://georgehowell.com.au/GH-2020/banner-ads/blaze/index.html" scrolling="no" style="border:2px solid #000" width="164" height="604"></iframe>
+    <p><small>Created using GSAP for Blaze Advertising (2014)</small></p>
+</div>
+<div *ngIf="modalContent === modalContentEnum.Virgin" class="modal-body">
+    <iframe src="http://georgehowell.com.au/GH-2020/banner-ads/virgin/index.html" scrolling="no" style="border:2px solid #000" width="304" height="604"></iframe>
+    <p><small>Created using Google Web Developer for Virgin Australia (2017)</small></p>
+</div>
